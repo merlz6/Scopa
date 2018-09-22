@@ -17,7 +17,7 @@ const generateDeck = () => {
     //for each number
     for(let n = 0; n < numbers.length; n++){
       // push that card to deck
-      deck.push(numbers[n] + ' of ' + suits[i])
+      deck.push(suits[i] + '_' + numbers[n])
     }
   }
   console.log(deck)
@@ -27,9 +27,13 @@ const generateDeck = () => {
 const $deal = () => {
   // generate 3 cards random
   for(let i = 0; i < 3; i++){
-  let card = Math.floor(Math.random() * 41);
+    // 40 cards, values generated 0 - 40
+  let cardNum = Math.floor(Math.random() * (deck.length + 1));
+  let card = deck[cardNum];
+  //appending a img of each CARD to player 1
+  $('#1sCards').append('<img src="images/' + card + '.png">' )
   // remove card from deck so cannot be used again
-  deck.splice(deck[card], 1);
+  deck.splice(deck[cardNum], 1);
   console.log(deck.length)
 }
 }
