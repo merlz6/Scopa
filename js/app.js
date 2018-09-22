@@ -4,20 +4,42 @@ let player1Cards = [];
 let player2Cards = [];
 let deck = [];
 
-// generate deck makes an array of cards 
+
+
+
+
+
+
+// generate deck makes an array of cards
 const generateDeck = () => {
-  for(let element of suits){
-    for(let num of numbers){
-      deck.push(numbers[num] + ' of ' + element)
+  // for each suit
+  for(let i = 0; i < suits.length; i++){
+    //for each number
+    for(let n = 0; n < numbers.length; n++){
+      // push that card to deck
+      deck.push(numbers[n] + ' of ' + suits[i])
     }
   }
   console.log(deck)
 }
 
 
+const $deal = () => {
+  // generate 3 cards random
+  for(let i = 0; i < 3; i++){
+  let card = Math.floor(Math.random() * 41);
+  // remove card from deck so cannot be used again
+  deck.splice(deck[card], 1);
+  console.log(deck.length)
+}
+}
+
+
+
+
 $(() => {
 
   generateDeck();
-
+  $deal();
 
 })

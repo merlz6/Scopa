@@ -14,7 +14,7 @@ header {
 
 h1 {
   margin-top: 20px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   color: ghostwhite;
 }
 
@@ -46,7 +46,7 @@ main {
   justify-content: center;
   border:.5px solid grey;
   text-align: center;
-  margin-top: 200px;
+  margin-top: 100px;
 
 }
 
@@ -60,8 +60,7 @@ aside button {
 }
 
 .player1Cards {
-  align-self: baseline;
-
+  background: 1px solid grey;
 }
 
 h4 {
@@ -72,19 +71,59 @@ h4 {
 }
 
 #gameBoard {
-
-height: 470px;
+border: 1px solid grey;
+height: 480px;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+align-items: center;
 }
 
 
 #RoundScoreBoard {
   width:120px;
   height: 150px;
-  border:.5px solid grey;
+  border:.5px solid black;
+  background: grey;
+  color:black;
 }
 
 #GameScoreBoard {
   width:120px;
   height: 150px;
-  border:.5px solid grey;
+  border:.5px solid black;
+  background: grey;
+  color:black;
+}
+
+.right {
+    /* margin-top:  */
+
+}
+
+.rulesDiv {
+  text-align: center;
+}
+
+.rulesButton {
+  height:35px;
+  width:100px;
+  border-radius: 10px;
+}
+
+.player {
+  width:400px;
+  height:150px;
+  border: .5px solid grey;
+  justify-content: space-between;
+}
+
+.middleCards {
+  width:600px;
+  height:150px;
+  border: .5px solid grey;
+}
+#gameBoard img {
+    height:100px;
+    width:100px;
 }
