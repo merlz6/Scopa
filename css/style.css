@@ -118,11 +118,17 @@ align-items: center;
   justify-content: space-between;
 }
 
+.player img {
+  margin:15px 10px;
+}
+
+
 .middleCards {
   width:600px;
   height:150px;
   border: .5px solid grey;
 }
+
 #gameBoard img {
     height:100px;
     width:100px;
