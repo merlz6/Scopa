@@ -25,6 +25,8 @@ const generateDeck = () => {
 }
 
 
+
+
 const $deal = () => {
   // check to see if game has started
   if (deck.length === 40) {
@@ -46,6 +48,9 @@ const $deal = () => {
       // 40 cards, values generated 0 - 40
       let cardNum = Math.floor(Math.random() * (deck.length));
       let card = deck[cardNum];
+      // saving players hands
+      handPlayerOne.push(card)
+
       //appending a img of each CARD to player 1
       $('#2sCards').append('<img src="images/' + card + '.png">')
       // remove card from deck so cannot be used again
@@ -58,16 +63,26 @@ const $deal = () => {
     for(let j = 0; j < 4; j++){
       let cardNum = Math.floor(Math.random() * (deck.length));
       let card = deck[cardNum];
+      handPlayerTwo.push(card)
       $('.middleCards').append('<img src="images/' + card + '.png">')
       // remove card from deck so cannot be used again
       deck.splice((deck[cardNum] - 1), 1);
     }
 
-
-
 }
 
+const $select =() => {
+  console.log(handPlayerOne)
+  console.log(handPlayerTwo)
+}
+// Select cards button will push the selected card into a player array (ex. i have a five, i click it, then the 5 on the board they are put into array and checked if theyre sums (can be 2 + 3 cards = 5))
+// when selected maybe enlarge or highlight so player knows there selected
+//submit button takes or puts down card
 
+let handPlayerOne = [];
+let handPlayerTwo = [];
+
+$('.players').on('click')
 
 
 $(() => {
@@ -75,4 +90,5 @@ $(() => {
   generateDeck();
   //deal button click will deal three cards to each player, and remove the card from the deck
   $('#dealCards').on('click', $deal)
+  $('#cardSelector').on('click', $select)
 })
