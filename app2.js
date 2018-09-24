@@ -14,7 +14,7 @@ let player1Turn = true;
 //card to be selected from hand
 let $cardToBeUsed;
 //card to be selected from middle
-let cardMatched = []
+let $cardMatched = []
 let player1RoundPoints = 0
 let player2RoundPoints = 0
 
@@ -87,79 +87,30 @@ const $deal = () => {
 } // ends deal function
 
 
-
-
-var $card1;
-var $card1Number;
-const $select1 = (event) => {
-  // enlarge and border selectable cards for player(*middle)
-  $('.middleCards').children().css('border', '2px solid red');
-  $('.middleCards').children().css('transform', 'scale(1.15)');
-
-
-  var $card1 = $player1Cards[0].toString()
-  var $card1Number = parseInt($card1[$card1.length - 1])
-  $cardToBeUsed = $card1number
-  console.log($card1Number)
-
+const $selectFirstCard = (event) => {
+  let $sourceString = event.target.src
+   $cardToBeUsed = parseInt($sourceString[$sourceString.length - 5])
+  console.log($cardToBeUsed)
 }
 
-var $card2;
-var $card2Number;
-const $select2 = (event) => {
-  // enlarge and border selectable cards for player(*middle)
-  $('.middleCards').children().css('border', '2px solid red');
-  $('.middleCards').children().css('transform', 'scale(1.15)');
-
-  // stores string card in var, then takes the number off the end,
-  $card2 = $player1Cards[1].toString()
-  $card2Number = parseInt($card2[$card2.length - 1])
-  $cardToBeUsed = $card2Number
-  console.log($card2Number)
-
-}
-var $card3;
-var $card3Number;
-const $select3 = (event) => {
-  // enlarge and border selectable cards for player(*middle)
-  $('.middleCards').children().css('border', '2px solid red');
-  $('.middleCards').children().css('transform', 'scale(1.15)');
-
-  // stores string card in var, then takes the number off the end,
-  $card3 = $player1Cards[2].toString()
-  $card3Number = parseInt($card3[$card3.length - 1])
-  $cardToBeUsed = $card3Number
-  console.log($card3Number)
-
+const $selectSecondCard = (event) => {
+  let $sourceString = event.target.src
+   $card = parseInt($sourceString[$sourceString.length - 5])
+   $cardMatched.push($card)
+   console.log($cardMatched)
 }
 
-const selector = (event) => {
-  let $sourceString =event.target.src
-  let $last5 = parseInt($sourceString[$sourceString.length - 5])
-  console.log($last5)
-  cardMatched.push($last5);
+const $submit = (event) => {
+  let $sum = 0;
+  for(let i = 0; i < $cardMatched.length; i++){
+    $sum += $cardMatched[i];
+  }
+  if($cardToBeUsed === $sum){
+    console.log('sum works!')
+  } else {
+    console.log('huh')
+  }
 }
-
-const $checkIfMatch = (event) => {
-
-if(Number($last5) === Number($cardToBeUsed)){
-  $player1TotalCards.push($last5);
-  $player1TotalCards.push($cardToBeUsed)
-  console.log($player1TotalCards.length)
-} else {
-  alert('non match selected')
-}
-}
-
-
-// Select cards button will push the selected card into a player array (ex. i have a five, i click it, then the 5 on the board they are put into array and checked if theyre sums (can be 2 + 3 cards = 5))
-// when selected maybe enlarge or highlight so player knows there selected
-//submit button takes or puts down card
-
-// function sumbit (){
-//   if($card1Number || $card2Number |)
-// }
-
 
 $(() => {
 
@@ -171,8 +122,8 @@ $(() => {
   $('#dealCards').on('click', $deal)
   // $('#cardSelector').on('click', $select)
 
-  $('#1CardP1').on('click', $select1)
-  $('#2CardP1').on('click', $select2)
-  $('#3CardP1').on('click', $select3)
-  $('.middleCards').on('click', $checkIfMatch)
+  $('#1sCards').on('click', $selectFirstCard)
+
+  $('.middleCards').on('click', $selectSecondCard)
+  $('#submit').on('click', $submit)
 })

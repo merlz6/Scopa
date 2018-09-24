@@ -5,6 +5,7 @@ html {
   background-image: url('http://s3.envato.com/files/243424314/poker-2.jpg');
   background-repeat: no-repeat;
   background-size: cover;
+
 }
 header {
   text-align: center;
@@ -128,6 +129,8 @@ align-items: center;
   height:150px;
   border: .5px solid grey;
   justify-content: space-between;
+  display: flex;
+  flex-direction: row;
 }
 
 #gameBoard img {
