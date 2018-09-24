@@ -7,8 +7,8 @@ let $player2Cards = [];
 let $middleCards = [];
 
 //players collected cardS
-let $player1TotalCards = []
-
+let $player1Total = 0
+let $player2Total = 0
 
 let player1Turn = true;
 //card to be selected from hand
@@ -44,7 +44,7 @@ const $deal = () => {
       $img.attr('src', 'images/' + card + '.png ')
             //appending a img of each CARD to player 1
       $('#1sCards').append($img)
-      console.log(cardNum);
+      //console.log(cardNum);
 
 
 
@@ -74,25 +74,62 @@ const $deal = () => {
       $player2Cards.push(pusher);
       //console.log(deck.length)
     }
+    for (let j = 0; j < 4; j++) {
+      let cardNum = Math.floor(Math.random() * (deck.length));
+      let card = deck[cardNum];
+      let $img = $('<img>').attr('id', j)
+      $img.attr('src', 'images/' + card + '.png ')
+            //appending a img of each CARD to player 1
+      $('.middleCards').append($img)
+
+
+      // remove card from deck so cannot be used again
+      let removedCard = deck.splice(cardNum, 1);
+      $middleCards.push(removedCard)
+      // console.log(removedCard)
+    }
+  } else if($('#1sCards').children().length === 0){
+    for (let i = 0; i < 3; i++) {
+      // 40 cards, values generated 0 - 40
+      let cardNum = Math.floor(Math.random() * (deck.length));
+      let card = deck[cardNum];
+      let $img = $('<img>').attr('id', i)
+      $img.attr('src', 'images/' + card + '.png ')
+            //appending a img of each CARD to player 1
+      $('#1sCards').append($img)
+      // console.log(cardNum);
+
+      // remove card from deck so cannot be used again
+      let pusherCard = deck.splice(cardNum, 1);
+      // console.log(pusherCard)
+      $player1Cards.push(pusherCard);
+    }
+    for (let n = 0; n < 3; n++) {
+      // 40 cards, values generated 0 - 40
+      let cardNum = Math.floor(Math.random() * (deck.length));
+      let card = deck[cardNum];
+      let $img = $('<img>').attr('id', n)
+      $img.attr('src', 'images/' + card + '.png ')
+            //appending a img of each CARD to player 1
+      $('#2sCards').append($img)
+
+
+      //appending a img of each CARD to player 1
+      // $('#2sCards').append('<img src="images/' + card + '.png">')
+      // remove card from deck so cannot be used again
+      let pusher = deck.splice(cardNum, 1);
+
+      //add removedCard from deck to players hand
+      $player2Cards.push(pusher);
+      //console.log(deck.length)
+    }
+  }
   }
   // After the  3 player cards come out need to deal 4 middle cardS
 
-  for (let j = 0; j < 4; j++) {
-    let cardNum = Math.floor(Math.random() * (deck.length));
-    let card = deck[cardNum];
-    let $img = $('<img>').attr('id', j)
-    $img.attr('src', 'images/' + card + '.png ')
-          //appending a img of each CARD to player 1
-    $('.middleCards').append($img)
 
 
-    // remove card from deck so cannot be used again
-    let removedCard = deck.splice(cardNum, 1);
-    $middleCards.push(removedCard)
-    // console.log(removedCard)
-  }
-
-} // ends deal function
+ // ends deal function
 
 let $sourceString1;
 let $cardTarget;
@@ -101,7 +138,7 @@ const $selectFirstCard = (event) => {
    $cardTarget = event.target
 
    $cardToBeUsed = parseInt($sourceString1[$sourceString1.length - 5])
-  console.log($cardToBeUsed)
+  //console.log($cardToBeUsed)
   // event.target.remove()
 }
   let $sourceString2;
@@ -119,13 +156,19 @@ const $submit = (event) => {
   let $sum = 0;
   for(let i = 0; i < $cardMatched.length; i++){
     $sum += $cardMatched[i];
+
   }
   if($cardToBeUsed === $sum){
     console.log('sum works!')
     //add the cards matched from the middle and your card to your total pile
-    $player1TotalCards += $cardMatched.length + 1;
+    if(player1Turn === true){
+    $player1Total += 2;
+  } else {
+    $player2Total += 2;
+  }
     $cardMatched = [];
-    console.log($player1TotalCards)
+    $cardToBeUsed = ''
+    // console.log($player1TotalCards.length)
     $($cardTarget).remove();
     $($cardTarget2).remove();
 
@@ -133,11 +176,26 @@ const $submit = (event) => {
     // computerTurn();
   } else {
     console.log('huh')
+    $cardMatched = [];
   }
+  //update turn
+  player1Turn = !player1Turn
+  //update card numbers
+
 }
 
-// drop a card,
+let $sourceStringP2;
+let $cardTargetP2;
+let compCardToBeUsed;
+const $compMove = (event) => {
+   $sourceStringP2 = event.target.src
+   $cardTargetP2 = event.target
 
+   $compCardToBeUsed = parseInt($sourceString1[$sourceString1.length - 5])
+  //console.log($cardToBeUsed)
+  // event.target.remove()
+
+}
 
 
 $(() => {
@@ -153,7 +211,10 @@ $(() => {
   $('#1sCards').on('click', $selectFirstCard)
 
   $('.middleCards').on('click', $selectSecondCard)
+  $('#2sCards').on('click', $selectFirstCard)
   $('#submit').on('click', $submit)
+
+  // drop a card,
   $('#1CardP1').on('click', () => {
     let $dropper = $('#1sCards').children().eq(0);
     $('.middleCards').append($dropper)
@@ -166,5 +227,20 @@ $(() => {
     let $dropper = $('#1sCards').children().eq(2);
     $('.middleCards').append($dropper)
   })
+  // other player drop card
+  $('#1CardP2').on('click', () => {
+    let $dropper = $('#2sCards').children().eq(0);
+    $('.middleCards').append($dropper)
+  })
+  $('#2CardP2').on('click', () => {
+    let $dropper = $('#2sCards').children().eq(1);
+    $('.middleCards').append($dropper)
+  })
+  $('#3CardP3').on('click', () => {
+    let $dropper = $('#2sCards').children().eq(2);
+    $('.middleCards').append($dropper)
+  })
+
+
 
 })
