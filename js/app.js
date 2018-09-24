@@ -17,7 +17,8 @@ let $cardToBeUsed;
 let cardMatched = []
 let player1RoundPoints = 0
 let player2RoundPoints = 0
-
+let player1GamePoints = 0
+let player2GamePoints = 0
 // generate deck makes an array of cards
 const generateDeck = () => {
   // for each suit
@@ -31,60 +32,107 @@ const generateDeck = () => {
   console.log(deck)
 }
 
+if (player1GamePoints < 11 || player2GamePoints < 11) {
 
-const $deal = () => {
-  // check to see if game has started
-  if (deck.length === 40) {
-    // generate 3 cards random
-    for (let i = 0; i < 3; i++) {
-      // 40 cards, values generated 0 - 40
+  const $deal = () => {
+    // check to see if game has started
+    if (deck.length === 40) {
+      // generate 3 cards random
+      for (let i = 0; i < 3; i++) {
+        // 40 cards, values generated 0 - 40
+        let cardNum = Math.floor(Math.random() * (deck.length));
+        let card = deck[cardNum];
+
+        console.log(cardNum);
+
+
+        //appending a img of each CARD to player 1
+        $('#1sCards').append('<img src="images/' + card + '.png">')
+        // remove card from deck so cannot be used again
+        let pusherCard = deck.splice(cardNum, 1);
+        // console.log(pusherCard)
+        $player1Cards.push(pusherCard);
+      }
+      // Now deal player 2
+      for (let n = 0; n < 3; n++) {
+        // 40 cards, values generated 0 - 40
+        let cardNum = Math.floor(Math.random() * (deck.length));
+        let card = deck[cardNum];
+
+
+
+        //appending a img of each CARD to player 1
+        $('#2sCards').append('<img src="images/' + card + '.png">')
+        // remove card from deck so cannot be used again
+        let pusher = deck.splice(cardNum, 1);
+
+        //add removedCard from deck to players hand
+        $player2Cards.push(pusher);
+        console.log(deck.length)
+      }
+
+
+
+
+    }
+    // After the  3 player cards come out need to deal 4 middle cardS
+
+    for (let j = 0; j < 4; j++) {
       let cardNum = Math.floor(Math.random() * (deck.length));
       let card = deck[cardNum];
+      let $divR = $('<div>')
+      $divR.append('<img src="images/' + card + '.png">')
+      $('.middleCards').append($divR);
 
-      console.log(cardNum);
-
-
-      //appending a img of each CARD to player 1
-      $('#1sCards').append('<img src="images/' + card + '.png">')
       // remove card from deck so cannot be used again
-      let pusherCard = deck.splice(cardNum, 1);
-      // console.log(pusherCard)
-      $player1Cards.push(pusherCard);
+      let removedCard = deck.splice(cardNum, 1);
+      $middleCards.push(removedCard)
+      // console.log(removedCard)
     }
-    // Now deal player 2
-    for (let n = 0; n < 3; n++) {
-      // 40 cards, values generated 0 - 40
-      let cardNum = Math.floor(Math.random() * (deck.length));
-      let card = deck[cardNum];
 
+  } // ends deal function
+  if (player1Turn === true) {
 
+    const $selectFirstCard = (event) => {
+      let $sourceString = event.target.src
 
-      //appending a img of each CARD to player 1
-      $('#2sCards').append('<img src="images/' + card + '.png">')
-      // remove card from deck so cannot be used again
-      let pusher = deck.splice(cardNum, 1);
+      $cardToBeUsed = parseInt($sourceString[$sourceString.length - 5])
+      console.log($cardToBeUsed)
+      event.target.remove()
+    }
 
-      //add removedCard from deck to players hand
-      $player2Cards.push(pusher);
-      console.log(deck.length)
+    const $selectSecondCard = (event) => {
+      let $sourceString = event.target.src
+      $card = parseInt($sourceString[$sourceString.length - 5])
+      $cardMatched.push($card)
+      console.log($cardMatched)
+      event.target.remove();
+    }
+    const $submit = (event) => {
+      let $sum = 0;
+      for (let i = 0; i < $cardMatched.length; i++) {
+        $sum += $cardMatched[i];
+      }
+      if ($cardToBeUsed === $sum) {
+        console.log('sum works!')
+        //add the cards matched from the middle and your card to your total pile
+        $player1TotalCards += $cardMatched.length + 1;
+        $cardMatched = [];
+        player1Turn = !player1Turn
+        console.log($player1TotalCards)
+      } else {
+        console.log('huh')
+      }
     }
   }
-  // After the  3 player cards come out need to deal 4 middle cardS
 
-  for (let j = 0; j < 4; j++) {
-    let cardNum = Math.floor(Math.random() * (deck.length));
-    let card = deck[cardNum];
-    let $divR = $('<div>')
-    $divR.append('<img src="images/' + card + '.png">')
-    $('.middleCards').append($divR);
 
-    // remove card from deck so cannot be used again
-    let removedCard = deck.splice(cardNum, 1);
-    $middleCards.push(removedCard)
-    // console.log(removedCard)
-  }
+}
 
-} // ends deal function
+
+
+
+
 
 
 
@@ -134,7 +182,7 @@ const $select3 = (event) => {
 }
 
 const selector = (event) => {
-  let $sourceString =event.target.src
+  let $sourceString = event.target.src
   let $last5 = parseInt($sourceString[$sourceString.length - 5])
   console.log($last5)
   cardMatched.push($last5);
@@ -142,13 +190,13 @@ const selector = (event) => {
 
 const $checkIfMatch = (event) => {
 
-if(Number($last5) === Number($cardToBeUsed)){
-  $player1TotalCards.push($last5);
-  $player1TotalCards.push($cardToBeUsed)
-  console.log($player1TotalCards.length)
-} else {
-  alert('non match selected')
-}
+  if (Number($last5) === Number($cardToBeUsed)) {
+    $player1TotalCards.push($last5);
+    $player1TotalCards.push($cardToBeUsed)
+    console.log($player1TotalCards.length)
+  } else {
+    alert('non match selected')
+  }
 }
 
 

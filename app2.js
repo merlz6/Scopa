@@ -40,12 +40,15 @@ const $deal = () => {
       // 40 cards, values generated 0 - 40
       let cardNum = Math.floor(Math.random() * (deck.length));
       let card = deck[cardNum];
-
+      let $img = $('<img>').attr('id', i)
+      $img.attr('src', 'images/' + card + '.png ')
+            //appending a img of each CARD to player 1
+      $('#1sCards').append($img)
       console.log(cardNum);
 
 
-      //appending a img of each CARD to player 1
-      $('#1sCards').append('<img src="images/' + card + '.png">')
+
+
       // remove card from deck so cannot be used again
       let pusherCard = deck.splice(cardNum, 1);
       // console.log(pusherCard)
@@ -56,17 +59,20 @@ const $deal = () => {
       // 40 cards, values generated 0 - 40
       let cardNum = Math.floor(Math.random() * (deck.length));
       let card = deck[cardNum];
-
+      let $img = $('<img>').attr('id', n)
+      $img.attr('src', 'images/' + card + '.png ')
+            //appending a img of each CARD to player 1
+      $('#2sCards').append($img)
 
 
       //appending a img of each CARD to player 1
-      $('#2sCards').append('<img src="images/' + card + '.png">')
+      // $('#2sCards').append('<img src="images/' + card + '.png">')
       // remove card from deck so cannot be used again
       let pusher = deck.splice(cardNum, 1);
 
       //add removedCard from deck to players hand
       $player2Cards.push(pusher);
-      console.log(deck.length)
+      //console.log(deck.length)
     }
   }
   // After the  3 player cards come out need to deal 4 middle cardS
@@ -74,9 +80,11 @@ const $deal = () => {
   for (let j = 0; j < 4; j++) {
     let cardNum = Math.floor(Math.random() * (deck.length));
     let card = deck[cardNum];
-    let $divR = $('<div>')
-    $divR.append('<img src="images/' + card + '.png">')
-    $('.middleCards').append($divR);
+    let $img = $('<img>').attr('id', j)
+    $img.attr('src', 'images/' + card + '.png ')
+          //appending a img of each CARD to player 1
+    $('.middleCards').append($img)
+
 
     // remove card from deck so cannot be used again
     let removedCard = deck.splice(cardNum, 1);
@@ -86,18 +94,25 @@ const $deal = () => {
 
 } // ends deal function
 
-
+let $sourceString1;
+let $cardTarget;
 const $selectFirstCard = (event) => {
-  let $sourceString = event.target.src
-   $cardToBeUsed = parseInt($sourceString[$sourceString.length - 5])
-  console.log($cardToBeUsed)
-}
+   $sourceString1 = event.target.src
+   $cardTarget = event.target
 
+   $cardToBeUsed = parseInt($sourceString1[$sourceString1.length - 5])
+  console.log($cardToBeUsed)
+  // event.target.remove()
+}
+  let $sourceString2;
+  let $cardTarget2;
 const $selectSecondCard = (event) => {
-  let $sourceString = event.target.src
-   $card = parseInt($sourceString[$sourceString.length - 5])
+  let $sourceString2 = event.target.src
+  $cardTarget2 = event.target
+   $card = parseInt($sourceString2[$sourceString2.length - 5])
    $cardMatched.push($card)
    console.log($cardMatched)
+   // event.target.remove();
 }
 
 const $submit = (event) => {
@@ -107,10 +122,23 @@ const $submit = (event) => {
   }
   if($cardToBeUsed === $sum){
     console.log('sum works!')
+    //add the cards matched from the middle and your card to your total pile
+    $player1TotalCards += $cardMatched.length + 1;
+    $cardMatched = [];
+    console.log($player1TotalCards)
+    $($cardTarget).remove();
+    $($cardTarget2).remove();
+
+// make computer check cards for a match a function?
+    // computerTurn();
   } else {
     console.log('huh')
   }
 }
+
+// drop a card,
+
+
 
 $(() => {
 
@@ -126,4 +154,17 @@ $(() => {
 
   $('.middleCards').on('click', $selectSecondCard)
   $('#submit').on('click', $submit)
+  $('#1CardP1').on('click', () => {
+    let $dropper = $('#1sCards').children().eq(0);
+    $('.middleCards').append($dropper)
+  })
+  $('#2CardP1').on('click', () => {
+    let $dropper = $('#1sCards').children().eq(1);
+    $('.middleCards').append($dropper)
+  })
+  $('#3CardP1').on('click', () => {
+    let $dropper = $('#1sCards').children().eq(2);
+    $('.middleCards').append($dropper)
+  })
+
 })
