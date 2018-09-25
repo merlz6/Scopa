@@ -15,8 +15,9 @@ let player1Turn = true;
 let $cardToBeUsed;
 //card to be selected from middle
 let $cardMatched = []
-let player1RoundPoints = 0
-let player2RoundPoints = 0
+// player who wins round +1
+let $player1Rounds = 0
+let $player2Rounds = 0
 
 // generate deck makes an array of cards
 const generateDeck = () => {
@@ -33,6 +34,7 @@ const generateDeck = () => {
 
 
 const $deal = () => {
+  $checkForWinner();
   // check to see if game has started
   if (deck.length === 40) {
     // generate 3 cards random
@@ -74,6 +76,7 @@ const $deal = () => {
       $player2Cards.push(pusher);
       //console.log(deck.length)
     }
+      // After the  3 player cards come out need to deal 4 middle cardS
     for (let j = 0; j < 4; j++) {
       let cardNum = Math.floor(Math.random() * (deck.length));
       let card = deck[cardNum];
@@ -88,6 +91,8 @@ const $deal = () => {
       $middleCards.push(removedCard)
       // console.log(removedCard)
     }
+  } else if(deck.length < 26){
+      $checkForWinner();
   } else if($('#1sCards').children().length === 0){
     for (let i = 0; i < 3; i++) {
       // 40 cards, values generated 0 - 40
@@ -113,9 +118,6 @@ const $deal = () => {
             //appending a img of each CARD to player 1
       $('#2sCards').append($img)
 
-
-      //appending a img of each CARD to player 1
-      // $('#2sCards').append('<img src="images/' + card + '.png">')
       // remove card from deck so cannot be used again
       let pusher = deck.splice(cardNum, 1);
 
@@ -124,12 +126,13 @@ const $deal = () => {
       //console.log(deck.length)
     }
   }
-  }
-  // After the  3 player cards come out need to deal 4 middle cardS
+
+  }// ends deal function
 
 
 
- // ends deal function
+
+
 
 let $sourceString1;
 let $cardTarget;
@@ -153,6 +156,7 @@ const $selectSecondCard = (event) => {
 }
 
 const $submit = (event) => {
+
   let $sum = 0;
   for(let i = 0; i < $cardMatched.length; i++){
     $sum += $cardMatched[i];
@@ -184,6 +188,7 @@ const $submit = (event) => {
 
   $('.player1Score').children('p').text($player1Total);
   $('.player2Score').children('p').text($player2Total);
+
 }
 
 let $sourceStringP2;
@@ -198,6 +203,26 @@ const $compMove = (event) => {
   // event.target.remove()
 
 }
+
+// check who won the round, should i end when the deck ends or when it gets low to a certain num?
+
+const $checkForWinner = () => {
+    if(deck.length < 30){ // testing purpose use half deck
+      if($player1Total > $player2Total){
+        alert('player 1 won the round!');
+        $player1Rounds += 1
+      } else if ($player2Total > $player1Total){
+        alert('player 2 won the round!')
+        $player2Rounds +=1
+      } else {
+        alert("TIE GAME!!")
+      }
+    }
+    $('.score1').children('p').text($player1Rounds);
+    $('.score2').children('p').text($player2Rounds);
+}
+
+
 
 
 $(() => {
@@ -220,29 +245,44 @@ $(() => {
   $('#1CardP1').on('click', () => {
     let $dropper = $('#1sCards').children().eq(0);
     $('.middleCards').append($dropper)
+    player1Turn = !player1Turn;
   })
   $('#2CardP1').on('click', () => {
+    player1Turn = false;
+
     let $dropper = $('#1sCards').children().eq(1);
     $('.middleCards').append($dropper)
+
   })
   $('#3CardP1').on('click', () => {
+    player1Turn = false;
+
     let $dropper = $('#1sCards').children().eq(2);
     $('.middleCards').append($dropper)
   })
   // other player drop card
   $('#1CardP2').on('click', () => {
+    player1Turn = true;
     let $dropper = $('#2sCards').children().eq(0);
     $('.middleCards').append($dropper)
+
   })
   $('#2CardP2').on('click', () => {
+    player1Turn = true;
+
     let $dropper = $('#2sCards').children().eq(1);
     $('.middleCards').append($dropper)
   })
   $('#3CardP2').on('click', () => {
+    player1Turn = true;
     let $dropper = $('#2sCards').children().eq(2);
     $('.middleCards').append($dropper)
+
   })
 
+  $('.use_drop').on('click', () => {
+    player1Turn = !player1Turn
+  })
 
 
 
