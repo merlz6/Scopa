@@ -138,16 +138,16 @@ let $cardTarget;
 const $selectFirstCard = (event) => {
    $sourceString1 = event.target.src
    $cardTarget = event.target
-
+   // $(event.target)
    $cardToBeUsed = parseInt($sourceString1[$sourceString1.length - 5])
   //console.log($cardToBeUsed)
   // event.target.remove()
 }
   let $sourceString2;
-  let $cardTarget2;
+  let $cardTarget2 = [];
 const $selectSecondCard = (event) => {
   let $sourceString2 = event.target.src
-  $cardTarget2 = event.target
+  $cardTarget2.push(event.target)
    $card = parseInt($sourceString2[$sourceString2.length - 5])
    $cardMatched.push($card)
    console.log($cardMatched)
@@ -173,7 +173,10 @@ const $submit = (event) => {
     $cardToBeUsed = ''
     // console.log($player1TotalCards.length)
     $($cardTarget).remove();
-    $($cardTarget2).remove();
+    for(let n = 0; n < $cardTarget2.length; n++){
+      $($cardTarget2[n]).remove()
+    }
+
     //update turn
     player1Turn = !player1Turn
 // make computer check cards for a match a function?
@@ -207,6 +210,7 @@ const $compMove = (event) => {
 // check who won the round, should i end when the deck ends or when it gets low to a certain num?
 
 const $checkForWinner = () => {
+
     if(deck.length === 0){ // testing purpose use half deck
       if($player1Total > $player2Total){
         alert('player 1 won the round!');
@@ -218,6 +222,16 @@ const $checkForWinner = () => {
         $player2Rounds +=1
       } else {
         alert("TIE GAME!!")
+      }
+      //check to see if someone won
+      if($player1Rounds === 3){
+        alert('player 1 wins the game')
+        $player1Rounds = 0
+        $player2Rounds = 0
+      } else if($player2Rounds === 3){
+        alert('player 2 wins the game')
+        $player1Rounds = 0
+        $player2Rounds = 0
       }
       // remove cards left on table
       $('.middleCards').children().remove();
