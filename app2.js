@@ -91,9 +91,8 @@ const $deal = () => {
       $middleCards.push(removedCard)
       // console.log(removedCard)
     }
-  } else if(deck.length < 26){
-      $checkForWinner();
-  } else if($('#1sCards').children().length === 0){
+
+  } else if ($('#1sCards').children().length === 0){
     for (let i = 0; i < 3; i++) {
       // 40 cards, values generated 0 - 40
       let cardNum = Math.floor(Math.random() * (deck.length));
@@ -175,15 +174,16 @@ const $submit = (event) => {
     // console.log($player1TotalCards.length)
     $($cardTarget).remove();
     $($cardTarget2).remove();
-
+    //update turn
+    player1Turn = !player1Turn
 // make computer check cards for a match a function?
     // computerTurn();
   } else {
     console.log('huh')
     $cardMatched = [];
   }
-  //update turn
-  player1Turn = !player1Turn
+
+
   //update card numbers
 
   $('.player1Score').children('p').text($player1Total);
@@ -211,15 +211,29 @@ const $checkForWinner = () => {
       if($player1Total > $player2Total){
         alert('player 1 won the round!');
         $player1Rounds += 1
+        //need to reset board and redo deck.
+        generateDeck();
       } else if ($player2Total > $player1Total){
         alert('player 2 won the round!')
         $player2Rounds +=1
       } else {
         alert("TIE GAME!!")
       }
+      // remove cards left on table
+      $('.middleCards').children().remove();
+      // turn round score back too zero
+      $player1Total = 0;
+      $player2Total = 0;
+      //change score board
+      $('.player1Score').children('p').text($player1Total);
+      $('.player2Score').children('p').text($player2Total);
+      //generate new deck amd deal,
+      generateDeck();
+      $deal();
     }
     $('.score1').children('p').text($player1Rounds);
     $('.score2').children('p').text($player2Rounds);
+
 }
 
 
@@ -284,6 +298,6 @@ $(() => {
     player1Turn = !player1Turn
   })
 
-
+$checkForWinner();
 
 })
