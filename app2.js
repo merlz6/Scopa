@@ -182,6 +182,8 @@ const $submit = (event) => {
   player1Turn = !player1Turn
   //update card numbers
 
+  $('.player1Score').children('p').text($player1Total);
+  $('.player2Score').children('p').text($player2Total);
 }
 
 let $sourceStringP2;
@@ -236,10 +238,11 @@ $(() => {
     let $dropper = $('#2sCards').children().eq(1);
     $('.middleCards').append($dropper)
   })
-  $('#3CardP3').on('click', () => {
+  $('#3CardP2').on('click', () => {
     let $dropper = $('#2sCards').children().eq(2);
     $('.middleCards').append($dropper)
   })
+
 
 
 
