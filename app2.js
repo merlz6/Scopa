@@ -140,6 +140,9 @@ const $selectFirstCard = (event) => {
    $cardTarget = event.target
    // $(event.target)
    $cardToBeUsed = parseInt($sourceString1[$sourceString1.length - 5])
+   if($cardToBeUsed === 0){
+     $cardToBeUsed = 10;
+   }
   //console.log($cardToBeUsed)
   // event.target.remove()
 }
@@ -149,6 +152,9 @@ const $selectSecondCard = (event) => {
   let $sourceString2 = event.target.src
   $cardTarget2.push(event.target)
    $card = parseInt($sourceString2[$sourceString2.length - 5])
+   if($card === 0){
+     $card = 10;
+   }
    $cardMatched.push($card)
    console.log($cardMatched)
    // event.target.remove();
@@ -165,9 +171,10 @@ const $submit = (event) => {
     console.log('sum works!')
     //add the cards matched from the middle and your card to your total pile
     if(player1Turn === true){
-    $player1Total += 2;
+      // adding the 1(for your own card used) + how ever many are in $cardTarget2
+    $player1Total += 1 + $cardMatched.length;
   } else {
-    $player2Total += 2;
+    $player2Total += 1 + $cardMatched.length;
   }
     $cardMatched = [];
     $cardToBeUsed = ''
@@ -184,6 +191,7 @@ const $submit = (event) => {
   } else {
     console.log('huh')
     $cardMatched = [];
+    $cardTarget2 = [];
   }
 
 
@@ -215,11 +223,14 @@ const $checkForWinner = () => {
       if($player1Total > $player2Total){
         alert('player 1 won the round!');
         $player1Rounds += 1
+        $('.score1').children('p').text($player1Rounds);
         //need to reset board and redo deck.
         generateDeck();
       } else if ($player2Total > $player1Total){
         alert('player 2 won the round!')
         $player2Rounds +=1
+        // update rounds score board
+        $('.score2').children('p').text($player2Rounds);
       } else {
         alert("TIE GAME!!")
       }
@@ -235,6 +246,8 @@ const $checkForWinner = () => {
       }
       // remove cards left on table
       $('.middleCards').children().remove();
+
+
       // turn round score back too zero
       $player1Total = 0;
       $player2Total = 0;
@@ -245,8 +258,7 @@ const $checkForWinner = () => {
       generateDeck();
       $deal();
     }
-    $('.score1').children('p').text($player1Rounds);
-    $('.score2').children('p').text($player2Rounds);
+
 
 }
 
