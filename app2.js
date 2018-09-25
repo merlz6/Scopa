@@ -207,7 +207,7 @@ const $compMove = (event) => {
 // check who won the round, should i end when the deck ends or when it gets low to a certain num?
 
 const $checkForWinner = () => {
-    if(deck.length < 30){ // testing purpose use half deck
+    if(deck.length === 0){ // testing purpose use half deck
       if($player1Total > $player2Total){
         alert('player 1 won the round!');
         $player1Rounds += 1

@@ -141,3 +141,12 @@ align-items: center;
 .middleCards img {
   margin:25px 10px;
 }
+h5 {
+  margin-bottom:8px;
+  margin-top: 8px;
+}
+
+p {
+  margin-top: 4px;
+  color: white;
+}
