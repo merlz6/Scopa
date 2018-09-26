@@ -278,6 +278,11 @@ const $checkForWinner = () => {
 
 
 
+
+
+
+
+
 $(() => {
 
   // start by creating a deck
@@ -336,6 +341,12 @@ $(() => {
   $('.use_drop').on('click', () => {
     player1Turn = !player1Turn
   })
+
+//reset button will reset everything to original
+  $('#reset').on('click', () => {
+    location.reload(false)
+  })
+
 
 $checkForWinner();
 
