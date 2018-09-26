@@ -158,7 +158,7 @@ const $selectSecondCard = (event) => {
   let $middleCardToBeUsed = event.target
   //give middle cards the same css effect when clicked as the other cards.
   $($middleCardToBeUsed).css('border', '5px solid red')
-  $($cardTarget2).css('transform', 'scale(1.1)')
+  $($middleCardToBeUsed).css('transform', 'scale(1.1)')
   $cardTarget2.push(event.target)
    $card = parseInt($sourceString2[$sourceString2.length - 5])
    if($card === 0){
@@ -346,6 +346,17 @@ $(() => {
   $('#reset').on('click', () => {
     location.reload(false)
   })
+
+  $('#unSelect').on('click', () => {
+    $($cardTarget).css('border', 'none')
+    $($cardTarget).css('transform', 'none')
+    $($cardTarget2).css('border', 'none')
+    $($cardTarget2).css('transform', 'none')
+    $cardMatched = [];
+    $cardToBeUsed = ''
+    $cardTarget2 = [];
+  })
+
 
 
 $checkForWinner();
