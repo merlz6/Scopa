@@ -138,6 +138,9 @@ let $cardTarget;
 const $selectFirstCard = (event) => {
    $sourceString1 = event.target.src
    $cardTarget = event.target
+   // give clicked card a border and enlarge 10% so player knows whats been clicked
+   $($cardTarget).css('border', '5px solid red')
+   $($cardTarget).css('transform', 'scale(1.1)')
    // $(event.target)
    $cardToBeUsed = parseInt($sourceString1[$sourceString1.length - 5])
    if($cardToBeUsed === 0){
@@ -146,10 +149,16 @@ const $selectFirstCard = (event) => {
   //console.log($cardToBeUsed)
   // event.target.remove()
 }
+// middle cards to be used in turn
   let $sourceString2;
   let $cardTarget2 = [];
 const $selectSecondCard = (event) => {
+  //getting the value from the event targets src
   let $sourceString2 = event.target.src
+  let $middleCardToBeUsed = event.target
+  //give middle cards the same css effect when clicked as the other cards.
+  $($middleCardToBeUsed).css('border', '5px solid red')
+  $($cardTarget2).css('transform', 'scale(1.1)')
   $cardTarget2.push(event.target)
    $card = parseInt($sourceString2[$sourceString2.length - 5])
    if($card === 0){
@@ -239,10 +248,14 @@ const $checkForWinner = () => {
         alert('player 1 wins the game')
         $player1Rounds = 0
         $player2Rounds = 0
+        $('.score1').children('p').text($player1Rounds);
+        $('.score2').children('p').text($player2Rounds);
       } else if($player2Rounds === 3){
         alert('player 2 wins the game')
         $player1Rounds = 0
         $player2Rounds = 0
+        $('.score1').children('p').text($player1Rounds);
+        $('.score2').children('p').text($player2Rounds);
       }
       // remove cards left on table
       $('.middleCards').children().remove();
