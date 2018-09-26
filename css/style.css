@@ -126,11 +126,13 @@ align-items: center;
 
 .middleCards {
   width:600px;
-  height:200px;
+  height:220px;
   border: .5px solid grey;
   justify-content: space-between;
+  align-items: center;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 }
 
 #gameBoard img {
@@ -139,7 +141,7 @@ align-items: center;
 }
 
 .middleCards img {
-  margin:25px 10px;
+  margin:4px 10px;
 }
 h5 {
   margin-bottom:8px;
