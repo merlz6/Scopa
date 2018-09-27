@@ -8,6 +8,9 @@ html {
 
 }
 header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   text-align: center;
   font-size: 30px;
 }
@@ -153,4 +156,17 @@ h5 {
 p {
   margin-top: 4px;
   color: white;
+}
+.headerFlag {
+  width:100px;
+  height:100px;
+}
+
+a{
+  color:ghostwhite;
+
+}
+
+a:active{
+  color:ghostwhite;
 }

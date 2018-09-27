@@ -1,0 +1,26 @@
+body {
+  text-align: center;
+  background-color: lightgrey;
+}
+
+
+h1 {
+  font-family: fantasy;
+  font-size:38px;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.headerFlags {
+  height: 100px;
+  width: 100px;
+}
+
+.allcards {
+  width: 600px;
+  height:400px;
+}
