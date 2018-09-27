@@ -289,13 +289,13 @@ const $checkForWinner = () => {
 
 
       //check to see if someone won
-      if($player1Rounds === 5){
+      if($player1Rounds === 7){
         alert('player 1 wins the game')
         $player1Rounds = 0
         $player2Rounds = 0
         $('.score1').children('p').text($player1Rounds);
         $('.score2').children('p').text($player2Rounds);
-      } else if($player2Rounds === 3){
+      } else if($player2Rounds === 7){
         alert('player 2 wins the game')
         $player1Rounds = 0
         $player2Rounds = 0
