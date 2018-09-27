@@ -19,6 +19,11 @@ let $cardMatched = []
 let $player1Rounds = 0
 let $player2Rounds = 0
 
+let $player1Sevens = 0
+let $player2Sevens = 0
+
+
+
 // generate deck makes an array of cards
 const generateDeck = () => {
   // for each suit
@@ -145,6 +150,12 @@ const $selectFirstCard = (event) => {
    $cardToBeUsed = parseInt($sourceString1[$sourceString1.length - 5])
    if($cardToBeUsed === 0){
      $cardToBeUsed = 10;
+   } else if($cardToBeUsed === 7){
+     if(player1Turn === true){
+       $player1Sevens += 1
+     } else {
+       $player2Sevens +=1
+     }
    }
   //console.log($cardToBeUsed)
   // event.target.remove()
@@ -163,6 +174,14 @@ const $selectSecondCard = (event) => {
    $card = parseInt($sourceString2[$sourceString2.length - 5])
    if($card === 0){
      $card = 10;
+   } else if($card === 7){
+     if(player1Turn === true){
+       $player1Sevens += 1
+     } else {
+       $player2Sevens +=1
+     }
+
+
    }
    $cardMatched.push($card)
    console.log($cardMatched)
@@ -203,12 +222,21 @@ const $submit = (event) => {
     $cardTarget2 = [];
   }
 
+    if($('.middleCards').children().length === 0){
+      alert('SCOPA!')
+      if(player1Turn === true){
+        $player1Rounds += 1
+      } else {
+        $player2Rounds += 1
+      }
+    }
 
   //update card numbers
 
   $('.player1Score').children('p').text($player1Total);
   $('.player2Score').children('p').text($player2Total);
-
+  $('.score1').children('p').text($player1Rounds);
+  $('.score2').children('p').text($player2Rounds);
 }
 
 let $sourceStringP2;
@@ -233,18 +261,35 @@ const $checkForWinner = () => {
         alert('player 1 won the round!');
         $player1Rounds += 1
         $('.score1').children('p').text($player1Rounds);
+
         //need to reset board and redo deck.
-        generateDeck();
+        // generateDeck();
       } else if ($player2Total > $player1Total){
         alert('player 2 won the round!')
         $player2Rounds +=1
         // update rounds score board
         $('.score2').children('p').text($player2Rounds);
+
       } else {
         alert("TIE GAME!!")
       }
+      if($player1Sevens > $player2Sevens){
+        $player1Rounds += 1
+
+        $player1Sevens = 0;
+        $player2Sevens = 0;
+      } else if($player2Sevens > $player1Sevens){
+        $player2Rounds += 1
+
+        $player1Sevens = 0;
+        $player2Sevens = 0;
+      }
+      $('.score1').children('p').text($player1Rounds);
+      $('.score2').children('p').text($player2Rounds);
+
+
       //check to see if someone won
-      if($player1Rounds === 3){
+      if($player1Rounds === 5){
         alert('player 1 wins the game')
         $player1Rounds = 0
         $player2Rounds = 0
@@ -269,7 +314,7 @@ const $checkForWinner = () => {
       $('.player2Score').children('p').text($player2Total);
       //generate new deck amd deal,
       generateDeck();
-      $deal();
+
     }
 
 
@@ -347,6 +392,8 @@ $(() => {
     location.reload(false)
   })
 
+
+//unselects cards, clears the arrays of cards to be used
   $('#unSelect').on('click', () => {
     $($cardTarget).css('border', 'none')
     $($cardTarget).css('transform', 'none')
@@ -356,6 +403,13 @@ $(() => {
     $cardToBeUsed = ''
     $cardTarget2 = [];
   })
+
+
+
+  // instructions Modal open:
+
+
+
 
 
 
