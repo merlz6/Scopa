@@ -217,7 +217,7 @@ const $submit = (event) => {
 // make computer check cards for a match a function?
     // computerTurn();
   } else {
-    console.log('huh')
+    aert('Oops those don\'t match. Try again')
     $cardMatched = [];
     $cardTarget2 = [];
   }
