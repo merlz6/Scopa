@@ -160,6 +160,9 @@ const $selectFirstCard = (event) => {
   //console.log($cardToBeUsed)
   // event.target.remove()
 }
+
+
+
 // middle cards to be used in turn
   let $sourceString2;
   let $cardTarget2 = [];
@@ -397,8 +400,10 @@ $(() => {
   $('#unSelect').on('click', () => {
     $($cardTarget).css('border', 'none')
     $($cardTarget).css('transform', 'none')
-    $($cardTarget2).css('border', 'none')
-    $($cardTarget2).css('transform', 'none')
+    for(let i = 0; i < $cardTarget2.length; i++){
+    $($cardTarget2[i]).css('border', 'none')
+    $($cardTarget2[i]).css('transform', 'none')
+  }
     $cardMatched = [];
     $cardToBeUsed = ''
     $cardTarget2 = [];
